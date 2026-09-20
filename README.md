@@ -1,0 +1,52 @@
+# mini-chain
+
+A small blockchain in Java: blocks, SHA-256 hashes, proof-of-work mining, mining rewards and payments between people. It's for learning how a blockchain works. There's no networking and no real money.
+
+## Running it
+
+You need Java 17 or newer and Maven.
+
+```
+mvn compile exec:java    # interactive menu
+mvn test
+```
+
+Try mining a block, tampering with it (option 7), then checking if the chain is valid (option 6).
+
+## The idea
+
+Each block stores some payments, the hash of the previous block, and its own hash. The hash is computed from the block's contents, so changing anything changes it, and the next block's link no longer matches. Mining means trying different nonces until the hash starts with enough zeros, which makes rewriting old blocks expensive.
+
+## How it's supposed to work
+
+Payments
+- The amount has to be more than 0.
+- You can't pay yourself.
+- You can't spend more than you have, and that includes payments you've already made that aren't mined yet.
+- Someone who has never received anything has a balance of 0.
+
+Mining
+- A mined block holds all waiting payments plus a 50 coin reward for the miner.
+- Every block's hash starts with as many zeros as the difficulty.
+
+Validation
+- `isValid()` returns false if anything in any mined block was changed, including block 1.
+
+## Code
+
+All in `src/main/java/minichain/`:
+
+- `Transaction.java`: a payment
+- `Block.java`: hashing and mining
+- `Blockchain.java`: payments, balances, validation
+- `Main.java`: the menu
+
+Tests are in `src/test/java/minichain/`.
+
+## Contributing
+
+Fork the repo, make your changes on a new branch, and open a pull request. Run `mvn test` first.
+
+If you find a bug, open an issue with the steps to reproduce it, what you expected, and what happened instead.
+
+Part of Source Start by CSI SPIT. MIT licensed.
