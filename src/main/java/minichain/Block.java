@@ -24,7 +24,7 @@ public class Block {
     }
 
     public String computeHash() {
-        String content = index + "|" + timestamp + "|" + previousHash + "|" + nonce;
+        String content = index + "|" + timestamp + "|" + previousHash + "|" + nonce + "|" + transactions;
         return sha256(content);
     }
 

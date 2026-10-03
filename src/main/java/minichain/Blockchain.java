@@ -66,7 +66,7 @@ public class Blockchain {
 
     public boolean isValid() {
         String target = "0".repeat(difficulty);
-        for (int i = 2; i < chain.size(); i++) {
+        for (int i = 1; i < chain.size(); i++) {
             Block block = chain.get(i);
             Block previous = chain.get(i - 1);
             if (!block.getHash().equals(block.computeHash())) return false;
