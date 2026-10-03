@@ -46,6 +46,15 @@ class BlockchainTest {
     }
 
     @Test
+    void cannotSpendQueuedCoins() {
+        Blockchain chain = new Blockchain(2);
+        chain.minePending("asha");
+        chain.addTransaction(new Transaction("asha", "ravi", 40));
+        assertThrows(IllegalArgumentException.class, () -> chain.addTransaction(new Transaction("asha", "meera", 40)));
+        assertEquals(1, chain.getPending().size());
+    }
+
+    @Test
     void blocksAreMinedAndLinked() {
         Blockchain chain = new Blockchain(3);
         chain.minePending("asha");

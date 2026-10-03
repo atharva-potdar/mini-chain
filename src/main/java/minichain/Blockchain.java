@@ -57,6 +57,12 @@ public class Blockchain {
                 balances.merge(tx.to(), tx.amount(), Integer::sum);
             }
         }
+
+        // adding pending transactions to the balances
+        for (Transaction tx : pending) {
+            balances.merge(tx.from(), -tx.amount(), Integer::sum);
+            balances.merge(tx.to(), tx.amount(), Integer::sum);
+        }
         return balances;
     }
 

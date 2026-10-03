@@ -46,7 +46,10 @@ public class Main {
                             block.getTransactions().forEach(tx -> System.out.println("  " + tx));
                         }
                     }
-                    case "4" -> chain.balances().forEach((name, coins) -> System.out.println(name + ": " + coins));
+                    case "4" -> {
+                        System.out.println("Balances (queued payments included):");
+                        chain.balances().forEach((name, coins) -> System.out.println(name + ": " + coins));
+                    }
                     case "5" -> {
                         String name = ask(in, "Name: ");
                         System.out.println(name + " has " + chain.balanceOf(name) + " coins");
