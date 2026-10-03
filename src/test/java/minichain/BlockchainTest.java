@@ -59,6 +59,24 @@ class BlockchainTest {
     }
 
     @Test
+    void changingAPaymentIsDetected() {
+        Blockchain chain = new Blockchain(2);
+        chain.minePending("asha");
+        Block block = chain.getChain().get(1);
+        Transaction original = block.getTransactions().get(0);
+        block.getTransactions().set(0, new Transaction(original.id(), original.from(), original.to(), 1_000_000));
+        assertFalse(chain.isValid());
+    }
+
+    @Test
+    void tamperingBlockOneIsDetected() {
+        Blockchain chain = new Blockchain(2);
+        chain.minePending("asha");
+        chain.getChain().get(1).tamperPreviousHash("f".repeat(64));
+        assertFalse(chain.isValid());
+    }
+
+    @Test
     void brokenLinkIsDetected() {
         Blockchain chain = new Blockchain(2);
         chain.minePending("asha");
