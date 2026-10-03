@@ -22,6 +22,7 @@ final class Storage {
         try (ObjectOutputStream out = new ObjectOutputStream(Files.newOutputStream(temp))) {
             out.writeObject(chain);
             Files.move(temp, file, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+            System.out.println("Saved " + file + ".");
         } catch (IOException e) {
             System.out.println("Couldn't save the chain: " + e.getMessage());
         }
@@ -38,6 +39,7 @@ final class Storage {
                 System.out.println(file + " doesn't hold a valid chain, so a new one was started.");
                 return new Blockchain(difficulty);
             }
+            System.out.println("Loaded " + file + ".");
             return chain;
         } catch (IOException | ClassNotFoundException | ClassCastException e) {
             System.out.println("Couldn't read " + file + " (" + e.getClass().getSimpleName() + "), so a new chain was started.");
